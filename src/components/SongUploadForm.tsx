@@ -6,8 +6,8 @@ import UploadProgress from "./UploadProgress";
 import { uploadSong } from "../api/song";
 
 const validationSchema = Yup.object().shape({
-  title: Yup.string().required("Title is required"),
-  artist: Yup.string().required("Artist is required"),
+  fileName: Yup.string().required("Title is required"),
+  publisherName: Yup.string().required("Publisher is required"),
   song: Yup.mixed().required("Audio file is required"),
 });
 
@@ -18,8 +18,8 @@ const SongUploadForm = () => {
 
   const formik = useFormik({
     initialValues: {
-      title: "",
-      artist: "",
+      fileName: "",
+      publisherName: "",
       song: null as File | null,
     },
     validationSchema,
@@ -29,8 +29,8 @@ const SongUploadForm = () => {
         setSuccess(false);
 
         const formData = new FormData();
-        formData.append("title", values.title);
-        formData.append("artist", values.artist);
+        formData.append("title", values.fileName);
+        formData.append("publisherName", values.publisherName);
         formData.append("song", values.song as File);
 
         await uploadSong(formData, (percent) => {
@@ -49,7 +49,7 @@ const SongUploadForm = () => {
 
   const { getRootProps, getInputProps } = useDropzone({
     accept: {
-      "audio/mpeg": [".mp3"],
+      "audio/mpeg": [".mp3", ".mpeg"],
     },
     maxFiles: 1,
     onDrop: (acceptedFiles) => {
@@ -60,46 +60,46 @@ const SongUploadForm = () => {
   return (
     <form onSubmit={formik.handleSubmit}>
       <div className="mb-[15px]">
-        <label htmlFor="title" className="text-lg font-semibold tracking-wider">
-          Title
+        <label htmlFor="fileName" className="text-lg font-semibold tracking-wider">
+          fileName
         </label>
         <input
-          id="title"
-          name="title"
+          id="fileName"
+          name="fileName"
           type="text"
-          placeholder="Enter Track Title"
+          placeholder="Enter Track Name"
           onChange={formik.handleChange}
-          value={formik.values.title}
+          value={formik.values.fileName}
           className="w-full p-[8px] border-2 rounded-md box-border"
           onBlur={formik.handleBlur}
         />
-        {formik.errors.title && formik.touched.title && (
+        {formik.errors.fileName && formik.touched.fileName && (
           <div className="text-[red] text-base mt-[5px]">
-            {formik.errors.title}
+            {formik.errors.fileName}
           </div>
         )}
       </div>
 
       <div className="mb-[15px]">
         <label
-          htmlFor="artist"
+          htmlFor="publisherName"
           className="text-lg font-semibold tracking-wider"
         >
-          Artist
+          publisherName
         </label>
         <input
-          id="artist"
-          name="artist"
+          id="publisherName"
+          name="publisherName"
           type="text"
-          placeholder="Enter Artist Name"
+          placeholder="Enter Publisher Name"
           onChange={formik.handleChange}
-          value={formik.values.artist}
+          value={formik.values.publisherName}
           className="w-full p-[8px] border-2 rounded-md box-border"
           onBlur={formik.handleBlur}
         />
-        {formik.errors.artist && formik.touched.artist && (
+        {formik.errors.publisherName && formik.touched.publisherName && (
           <div className="text-[red] text-base mt-[5px]">
-            {formik.errors.artist}
+            {formik.errors.publisherName}
           </div>
         )}
       </div>

@@ -6,7 +6,7 @@ export const uploadSong = async (
   formData: FormData,
   onUploadProgress?: (progress: number) => void
 ) => {
-  const response = await axios.post(`${API_URL}/upload`, formData, {
+  const response = await axios.post('http://localhost:3000/songs/upload', formData, {
     headers: {
       "Content-Type": "multipart/form-data",
     },
