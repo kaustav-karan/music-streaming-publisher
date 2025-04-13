@@ -1,7 +1,7 @@
 export interface Song {
   id: number;
   title: string;
-  artist: string;
+  publisherName: string;
   original_name: string;
   upload_time: string;
 }
